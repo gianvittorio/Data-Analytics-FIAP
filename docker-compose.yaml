@@ -1,0 +1,48 @@
+version: '3.3'
+
+volumes:
+  cloudera-volume:
+
+networks:
+  cloudera-network:
+    driver: bridge
+
+services:
+
+  cloudera-quickstart:
+    container_name: 'cloudera-quickstart'
+    build: ./cloudera-quickstart
+    privileged: true
+    tty: true
+    hostname: 'quickstart.cloudera'
+    volumes:
+      - cloudera-volume:/var
+    networks:
+      - cloudera-network
+    command: ["/usr/bin/docker-quickstart"]
+    ports:
+      - 8888:8888
+      - 10000:10000
+      - 25000:25000
+      - 25010:25010
+      - 25020:25020
+      - 50010:50010
+      - 50030:50030
+      - 50060:50060
+      - 50070:50070
+      - 50075:50075
+      - 50090:50090
+      - 60000:60000
+      - 60010:60010
+      - 60020:60020
+      - 60030:60030
+      - 7180:7180
+      - 7183:7183
+      - 7187:7187
+      - 80:80
+      - 8020:8020
+      - 8032:8032
+      - 802:8042
+      - 8088:8088
+      - 8983:8983
+      - 9083:9083
