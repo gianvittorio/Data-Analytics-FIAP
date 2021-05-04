@@ -16,7 +16,7 @@ docker-compose exec -T cloudera-quickstart hive << EOF
     create view views_per_hour as
     select result.hour_ as hour, count(*) as views
     from (
-        select hour(regexp_extract(l.data, '^.*\\d{2}\/\\w{2,3}\/\\d{4}\:(\\d{2}\:\\d{2}\:\\d{2}).*$', 1)) as hour_
+        select hour(regexp_extract(l.data, '^.*\\\d{2}\/\\\w{2,3}\/\\\d{4}\:(\\\d{2}\:\\\d{2}\:\\\d{2}).*$', 1)) as hour_
         from log_intermediario as l
     ) as result
     group by result.hour_;
@@ -25,7 +25,7 @@ docker-compose exec -T cloudera-quickstart hive << EOF
     create view os_histogram as
     select result.base_distribution, sum(result.views) as views
     from (
-        select regexp_extract(l.sistema_operacional, '\\(([^\\(\\)\;]+).*\\)', 1) as base_distribution, count(*) as views
+        select regexp_extract(l.sistema_operacional, '\\\(([^\\\(\\\)\;]+).*\\\)', 1) as base_distribution, count(*) as views
         from log_intermediario as l
         group by l.sistema_operacional
     ) as result
