@@ -1,6 +1,26 @@
 #!/bin/bash
 
+# Copy log file to be ingested, into HDFS:
+docker-compose exec -T cloudera-quickstart hadoop fs -mkdir -p /user/hive/warehouse/log
+docker-compose exec -T cloudera-quickstart hadoop fs -copyFromLocal ./access.log /user/hive/warehouse/log/access.log
+
+#Create table and handy views using Hive CLI:
 docker-compose exec -T cloudera-quickstart hive << EOF
+    CREATE EXTERNAL TABLE log_intermediario (
+    ip STRING,
+    data STRING,
+    metodo STRING,
+    url STRING,
+    http_versao STRING,
+    codigo1 STRING,
+    codigo2 STRING,
+    traco STRING,
+    Sistema_operacional STRING)
+
+    ROW FORMAT SERDE 'org.apache.hadoop.hive.contrib.serde2.RegexSerDe' WITH SERDEPROPERTIES ( 'input.regex' = '([^ ]*) - - \\\[([^\\\]]*)\\\] "([^\ ]*) ([^\ ]*) ([^\ ]*)" (\\\d*) (\\\d*) "([^"]*)" "([^"]*)"',
+    'output.format.string' = "%1$$s %2$$s %3$$s %4$$s %5$$s %6$$s %7$$s %8$$s %9$$s")
+    LOCATION '/user/hive/warehouse/log';
+
     drop view if exists product_histogram;
     create view product_histogram as
     select regexp_replace(regexp_extract(result.url, '^.*\/product\/(.*)$', 1), '%20', ' ') as product, result.views as views
