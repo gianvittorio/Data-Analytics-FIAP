@@ -1,11 +1,14 @@
 #!/bin/bash
 
+CONTAINER_NAME=cloudera-quickstart
+
 # Copy log file to be ingested, into HDFS:
-docker-compose exec -T cloudera-quickstart hadoop fs -mkdir -p /user/hive/warehouse/log
-docker-compose exec -T cloudera-quickstart hadoop fs -copyFromLocal ./access.log /user/hive/warehouse/log/access.log
+docker-compose exec -T $CONTAINER_NAME hadoop fs -mkdir -p /user/hive/warehouse/log
+docker-compose exec -T $CONTAINER_NAME hadoop fs -copyFromLocal ./access.log /user/hive/warehouse/log/access.log
 
 #Create table and handy views using Hive CLI:
 docker-compose exec -T cloudera-quickstart hive << EOF
+    drop table if exists log_intermediario;
     CREATE EXTERNAL TABLE log_intermediario (
     ip STRING,
     data STRING,
@@ -27,8 +30,8 @@ docker-compose exec -T cloudera-quickstart hive << EOF
     from (
         select l.url, count(*) as views
         from log_intermediario as l
-        where instr(l.url, 'product') > 0
         group by l.url
+        having instr(l.url, 'product') > 0
         order by views DESC
     ) as result;
     
