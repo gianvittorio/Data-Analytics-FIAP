@@ -46,12 +46,13 @@ docker-compose exec -T cloudera-quickstart hive << EOF
 
     drop view if exists os_histogram;
     create view os_histogram as
-    select result.base_distribution, sum(result.views) as views
+    select result.base_distribution, sum(result.views) as views, round((100 * sum(result.views) / oc.total), 2) as percentage
     from (
         select regexp_extract(l.sistema_operacional, '\\\(([^\\\(\\\)\;]+).*\\\)', 1) as base_distribution, count(*) as views
         from log_intermediario as l
         group by l.sistema_operacional
     ) as result
-    group by result.base_distribution
+    cross join (select count(*) as total from log_intermediario) as oc
+    group by result.base_distribution, oc.total
     order by views DESC;
 EOF
