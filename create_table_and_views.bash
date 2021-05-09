@@ -33,6 +33,7 @@ docker-compose exec -T cloudera-quickstart hive << EOF
         group by l.url
         having instr(l.url, 'product') > 0
         order by views DESC
+        limit 10
     ) as result;
     
     drop view if exists views_per_hour;
