@@ -35,6 +35,19 @@ docker-compose exec -T cloudera-quickstart hive << EOF
         order by views DESC
         limit 10
     ) as result;
+
+    drop view if exists department_histogram;
+    create view department_histogram as
+    select regexp_replace(result.department, '%20', ' ') as department, sum(result.views) as views
+    from (
+        select regexp_extract(l.url, '^.*\/department\/([^\\/]+).*$', 1) as department, count(*) as views
+        from log_intermediario as l
+        group by l.url
+        having instr(l.url, 'department') > 0
+    ) as result
+    group by result.department
+    order by views DESC
+    limit 10;
     
     drop view if exists views_per_hour;
     create view views_per_hour as
