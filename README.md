@@ -12,13 +12,17 @@ The whole process should take several minutes to get finished. You can follow th
 docker-compose logs cloudera-quickstart
 ```
 As soon as it is done, you will be able to access the web gui on <strong>http://localhost:8888</strong>. Default user and password are both <strong>cloudera</strong>. 
-We make use of <strong>Hive</strong> server, which provides us both a relational schema and <strong>HSQL</strong>, to building <strong>CRUD</strong> statements, later to be translated into Map Reduce jobs. That being said, please, run the following script, which will create the above mentioned schema, along with 3 views:
+We make use of <strong>Hive</strong> server, which provides us both a relational schema and <strong>HSQL</strong>, to building <strong>CRUD</strong> statements, later to be translated into Map Reduce jobs. That being said, please, run the following script, which will create the above mentioned schema, along with 4 views, as described by the schemas down below:
 
 | ip  | data  | method  |  url  | http_version  | code1  | code2  | trace  | operating system  |
 |---|---|---|---|---|---|---|---|---|
 | STRING  | STRING  | STRING  |  STRING  | STRING  | STRING  | STRING  | STRING  | STRING  |
 
 | Product  | Views  |
+|---|---|
+| STRING  | INT  |
+
+| Department  | Views  |
 |---|---|
 | STRING  | INT  |
 
@@ -36,8 +40,9 @@ bash create_table_and_views.bash
 
 Now, please, run the below script to dump the results from the above mentioned queries into log files under the <strong>results</strong>, namely:
   1. <strong>product_histogram.log</strong>
-  2. <strong>views_per_hour.log</strong>
-  3. <strong>os_histogram.log</strong>
+  2.  <strong>department_histogram.log</strong>
+  3. <strong>views_per_hour.log</strong>
+  4. <strong>os_histogram.log</strong>
 ```console
 bash dumd_results.bash
 ```
