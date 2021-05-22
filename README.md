@@ -2,6 +2,7 @@
 
 The following project intends to ingest a large, semistructured, log file - <strong>cloudera-quickstart/logs/access.log.2</strong> - from an e-commerce website and, finally, yield useful business data. To achieving so, it leverages the single node <strong>Hadoop Platform</strong> sandbox, provided by the modified [<strong>cloudera/quickstart</strong>](https://hub.docker.com/r/cloudera/quickstart/) official image. We emphasize that the overall goal is to give the reader a step by step tutorial on how to set up a sandbox, run <strong>Map Reduce</strong> pipelines and, finally, tear down the sandbox.
 All the scripts being used down below target UNIX/LINUX machines. However, if you happen to be a <strong>Windows</strong> user, you can just copy the commands within the body of the very scripts and run them on <strong>Power Shell</strong>. They will work regardless.
+Moreover, refer to cloudera's [<strong>hardware requirements</strong>](https://docs.cloudera.com/documentation/enterprise/release-notes/topics/hardware_requirements_guide.html), before spinning the sandbox container, as it requires 8Gb RAM and 32Gb disk at minimum.
 
 Please, make sure you have both <strong>docker</strong> and <strong>docker-compose</strong> installed on your machine. Then, run the following script to spin the sandbox:
 ```console
