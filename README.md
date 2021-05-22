@@ -11,6 +11,7 @@ The whole process should take several minutes to get finished. You can follow th
 ```console
 docker-compose logs cloudera-quickstart
 ```
+As soon as it is done, you will be able to access the web gui on <strong>http://localhost:8888</strong>. Default user and password are both <strong>cloudera</strong>. 
 We make use of <strong>Hive</strong> server, which provides us both a relational schema and <strong>HSQL</strong>, to building <strong>CRUD</strong> statements, later to be translated into Map Reduce jobs. That being said, please, run the following script, which will create the above mentioned schema, along with 3 views:
 
 | ip  | data  | method  |  url  | http_version  | code1  | code2  | trace  | operating system  |
