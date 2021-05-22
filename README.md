@@ -8,6 +8,10 @@ Please, make sure you have both <strong>docker</strong> and <strong>docker-compo
 ```console
 bash set_up_sandbox.bash
 ```
+The whole process should take several minutes to get finished. You can follow through by running:
+```console
+docker-compose logs cloudera-quickstart
+```
 
 ```console
 bash create_table_and_views.bash
